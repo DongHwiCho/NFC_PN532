@@ -2,12 +2,12 @@ import time
 import binascii
 
 # Import pn532pi module
-from pn532pi import Pn532, pn532
-from pn532pi import Pn532Spi
+from pn532pi.nfc import pn532
+from pn532pi.interfaces import pn532hsu
 
 # Generate and Setting PN532 NFC Module and SPI PORT
-PN532_SPI = Pn532Spi(Pn532Spi.SS0_GPIO8)
-nfc = Pn532(PN532_SPI)
+PN532_HSU = pn532hsu.Pn532Hsu(3)
+nfc = pn532.Pn532(PN532_HSU)
 
 # setup Method
 def setup():
@@ -76,7 +76,7 @@ def find_iso14443a():
 def find_other():
     print("Waiting for an Other card...  ")
     # Test for ISO15693 Card but can not read.....
-    success, uid = nfc.readPassiveTargetID(0x08, timeout=5000)
+    success, uid = nfc.readPassiveTargetID(pn532.PN532_FELICA_424KBPS, timeout=1000)
 
     # Read Success
     if success:
@@ -94,7 +94,7 @@ def loop():
     # Check correct type of NFC
     find_felica()
     find_iso14443a()
-    # find_other()
+    find_other()
 
 
 # Main
