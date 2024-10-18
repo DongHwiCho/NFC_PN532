@@ -20,7 +20,7 @@ class NfcController:
 
         self.nfc.begin()
 
-        versiondata = nfc.getFirmwareVersion()
+        versiondata = self.nfc.getFirmwareVersion()
         if not versiondata:
             print("Didn't find PN53x board")
             raise RuntimeError("Didn't find PN53x board")  # halt
