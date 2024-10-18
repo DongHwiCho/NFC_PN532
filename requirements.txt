@@ -1,1 +1,1 @@
-pyserial
+pn532pi
